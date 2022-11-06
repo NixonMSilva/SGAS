@@ -1,11 +1,11 @@
 var hasErrorMessage = false;
 var hasPasswordErrorMessage = false;
 
-const submitForm = () => {
+const submitForm = (formId, currentPage, repeatPass) => {
 
-    let form = document.getElementById("signup_form");
+    let form = document.getElementById(formId);
 
-    if (!formValidate(form))
+    if (!validateForm(form, repeatPass))
     {
         if (!hasErrorMessage)
         {
@@ -22,49 +22,68 @@ const submitForm = () => {
     }
     
     form.method = "post";
-    form.action = "register_user.php";
+    
+    switch (currentPage)
+    {
+        case 'signup':
+            form.action = "register_user.php";
+            break;
+
+        case 'login':
+            form.action = "login_user.php";
+            break;
+
+        case 'classroom':
+            form.action = "register_clasroom.php"; 
+            break;
+        
+    }
 
     form.submit();
 }
 
-const formValidate = (form) => {
-    let isFalse = false;
+const validateForm = (form, repeatPass) => {
 
-    if (form.elements[0].value === "")
-    {
-        let nameField = document.getElementById("floatingName");
-        nameField.value = "Nome vazio!";
-        isFalse = true;
-    }
+    let isCorrect = true;
 
-    if (!validateCpf(form.elements[1].value))
-    {
-        let cpfField = document.getElementById("floatingCpf");
-        cpfField.value = "CPF Inválido!";
-        isFalse = true;
-    }
+    let status = true;
 
-    if (form.elements[2].value === "")
+    let formElements = Array.from(form.elements);
+
+    for (let i = 0; i < formElements.length; ++i)
     {
-        let emailField = document.getElementById("floatingEmail");
-        emailField.value = "E-mail vazio!";
-        isFalse = true;
-    }
-    
-    if (!validatePassword(form.elements[4].value, form.elements[5].value))
-    {
-        if (!hasPasswordErrorMessage)
+        let elementType = formElements[i].id;
+
+        console.log(formElements[i].id);
+
+        switch (elementType)
         {
-            let errorMessage = document.getElementById("errorPassword");
-            let messageText = document.createTextNode("Senhas não são iguais!");
-            errorMessage.appendChild(messageText);
-            hasPasswordErrorMessage = true;
+            case "cpf":
+                status = validateCpf(formElements[i].value);
+                break;
+            case "password":
+                if (repeatPass)
+                    status = validatePassword(formElements[i].value, formElements[(i + 1)].value);
+                break;
+            default:
+                status = validateEmpty(formElements[i].value);
+                break;
         }
-        
-        isFalse = true;
+
+        if (!status)
+        {
+            isCorrect = false;
+            if (formElements[i].id != 'password' && formElements[i].id != 'passwordRepeat')
+                formElements[i].value = "Valor inválido!";
+        }
+
     }
 
-    return !(isFalse);
+    return isCorrect;
+}
+
+const validateEmpty = (value) => {
+    return !(value === "");
 }
 
 const validateCpf = (cpfString) => {
@@ -109,5 +128,16 @@ const validateCpf = (cpfString) => {
 }
 
 const validatePassword = (passwordFirst, passwordRepeat) => {
-    return (passwordFirst === passwordRepeat);
+    if (passwordFirst === passwordRepeat)
+        return true;
+
+    if (!hasPasswordErrorMessage)
+    {
+        let errorMessage = document.getElementById("errorPassword");
+        let messageText = document.createTextNode("Senhas não são iguais!");
+        errorMessage.appendChild(messageText);
+        hasPasswordErrorMessage = true;
+    }
+
+    return false;
 }

@@ -14,19 +14,10 @@ $currentTime    =   date("Y-m-d H:i:s", $currentTime);
 
 $userPassword   =   hash('sha256', $currentTime . $userPassword);
 
-$userInsertQuery    =   
+$userInsertQuery =
 "INSERT INTO user(name, email, pass_word, cpf, telephone, created_at) 
 VALUES ('$userName','$userEmail','$userPassword','$userCPF','$userTelephone', '$currentTime')";
 
 mysqli_query($connection, $userInsertQuery);
 
 header('location:index.php?page=home');
-
-/*
-echo "<h3>User submitted</h3><br>";
-
-echo $userName . "<br>" . $userEmail . "<br>" . $userPassword . "<br>" . $userCPF . "<br>" . $userTelephone . "<br>";
-
-echo $currentTime . "<br>";
-
-echo date("Y-m-d H:i:s", $currentTime); */
