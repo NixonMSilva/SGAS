@@ -4,7 +4,7 @@
 session_start();
 
 # Includes
-include 'includes.php';
+include 'includes.html';
 
 # Utils
 include 'utils/check_user.php';
