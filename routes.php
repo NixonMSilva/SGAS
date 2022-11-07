@@ -29,11 +29,19 @@ function setRoute ($page)
             break;
 
         case 'classrooms':
-            include 'views/classrooms.php';
+
+            if (isset($_SESSION['is_logged']))
+                include 'views/classrooms.php';
+            else
+                pagePermissionDenied();
             break;
 
         case 'requests':
-            include 'views/requests.php';
+
+            if (isset($_SESSION['is_logged']))
+                include 'views/requests.php';
+            else
+                pagePermissionDenied();
             break;
 
         default:

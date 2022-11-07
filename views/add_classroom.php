@@ -14,9 +14,10 @@
           <h4 class="mb-3">Informações da Sala</h4>
           <form method="post" id="classroom_form" class="needs-validation" novalidate>
             <div class="row g-3">
+              
               <div class="col-sm-6">
                 <label for="classroomCode" class="form-label">Código da Sala</label>
-                <input type="text" class="form-control" id="firstName" name="classroomCode" placeholder="Código" value="" required>
+                <input type="text" class="form-control" id="classroomCode" name="classroomCode" placeholder="Código" value="" required>
                 <div class="invalid-feedback">
                   Código da sala inválido
                 </div>
@@ -24,14 +25,15 @@
               
               <div class="col-sm-6">
                 <label for="classroomCap" class="form-label">Capacidade</label>
-                <input type="text" class="form-control" id="firstName" name="classroomCapacity" placeholder="50" value="" required>
+                <input type="text" class="form-control" id="classroomCapacity" name="classroomCapacity" placeholder="50" value="" required>
                 <div class="invalid-feedback">
                   Capacidade da sala inválida
                 </div>
               </div>
+
               <div class="col-sm-12">
                 <label for="classroomInstitute" class="form-label">Instituto</label>
-                <select class="form-select" id="country" name="clasroomInstitute" required>
+                <select class="form-select" id="classroomInstituteId" name="classroomInstituteId" required>
                   <option value="">Escolher...</option>
                   <?php
                     listInstituteOptions($connection);
@@ -44,7 +46,7 @@
 
             <hr class="my-4">
 
-            <button class="w-100 btn btn-primary btn-lg" type="button" onclick="submitForm('classroom_form', 'clasroom', false)">Cadastrar Sala</button>
+            <button class="w-100 btn btn-primary btn-lg" type="button" id="submitButton" onclick="submitForm('classroom_form', 'classroom', false)">Cadastrar Sala</button>
           </form>
         </div>
       </div>

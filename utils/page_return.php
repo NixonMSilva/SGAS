@@ -1,6 +1,6 @@
 <?php
 
-function returnInvalidCredentials ($returnArgs)
+function returnToPage ($returnArgs)
 {
     header('location:index.php?' . $returnArgs);
 }

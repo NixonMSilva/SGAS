@@ -16,20 +16,19 @@
             if (isset($_SESSION['is_logged']))
             {
               ?>
-              <li><a href="#" class="nav-link px-2 text-white">Listar Salas</a></li>
+              <li><a href="?page=classrooms" class="nav-link px-2 text-white">Listar Salas</a></li>
               <li><a href="#" class="nav-link px-2 text-white">Suas Alocações</a></li>
               <?php
               if (isManager($_SESSION['user_type']))
               {
                 ?>
-                <li><a href="index.php?page=add_classroom" class="nav-link px-2 text-white">Adc. Salas</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Solicitações</a></li>
                 <?php
                 if (isAdmin($_SESSION['user_type']))
                 {
                   ?>
-                  <li><a href="#" class="nav-link px-2 text-white">Adc. Institutos</a></li>
                   <li><a href="#" class="nav-link px-2 text-white">Listar Usuários</a></li>
+                  <li><a href="#" class="nav-link px-2 text-white">Adc. Institutos</a></li>
                   <?php
                 }
               }

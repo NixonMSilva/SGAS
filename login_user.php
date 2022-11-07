@@ -2,7 +2,7 @@
 
 include 'db.php';
 
-include 'utils/errorReturn.php';
+include 'utils/page_return.php';
 
 $user_email     =   mysqli_real_escape_string($connection, $_POST['userEmail']);
 $userPassword   =   mysqli_real_escape_string($connection, $_POST['userPassword']);
@@ -17,7 +17,7 @@ $object      = mysqli_fetch_array($queryResult);
 
 if (!$object)
 {
-    returnInvalidCredentials('page=home&error=1');
+    returnToPage('page=home&error=1');
     exit();
 }
 
@@ -26,7 +26,7 @@ $passwordReal = $object['pass_word'];
 
 if ($passwordTest != $passwordReal)
 {
-    returnInvalidCredentials('page=home&error=1');
+    returnToPage('page=home&error=1');
     exit();
 }
 

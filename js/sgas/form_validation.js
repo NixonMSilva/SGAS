@@ -34,7 +34,7 @@ const submitForm = (formId, currentPage, repeatPass) => {
             break;
 
         case 'classroom':
-            form.action = "register_clasroom.php"; 
+            form.action = "register_classroom.php"; 
             break;
         
     }
@@ -54,7 +54,8 @@ const validateForm = (form, repeatPass) => {
     {
         let elementType = formElements[i].id;
 
-        console.log(formElements[i].id);
+        if (elementType === "submitButton")
+            continue;
 
         switch (elementType)
         {
@@ -72,6 +73,8 @@ const validateForm = (form, repeatPass) => {
 
         if (!status)
         {
+            let errorString = "Error at: " + elementType;
+            console.log(errorString);
             isCorrect = false;
             if (formElements[i].id != 'password' && formElements[i].id != 'passwordRepeat')
                 formElements[i].value = "Valor inválido!";

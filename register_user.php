@@ -1,6 +1,7 @@
 <?php
 
 include 'db.php';
+include 'utils/current_time.php';
 
 $userName       =   mysqli_real_escape_string($connection, $_POST['userName']); 
 $userEmail      =   mysqli_real_escape_string($connection, $_POST['userEmail']);
@@ -8,11 +9,9 @@ $userPassword   =   mysqli_real_escape_string($connection, $_POST['userPassword'
 $userCPF        =   mysqli_real_escape_string($connection, $_POST['userCPF']);
 $userTelephone  =   mysqli_real_escape_string($connection, $_POST['userTelephone']);
 
-date_default_timezone_set("America/Sao_Paulo");
-$currentTime    =   $_SERVER['REQUEST_TIME'];
-$currentTime    =   date("Y-m-d H:i:s", $currentTime);
+$currentTime = getCurrentTime();
 
-$userPassword   =   hash('sha256', $currentTime . $userPassword);
+$userPassword = hash('sha256', $currentTime . $userPassword);
 
 $userInsertQuery =
 "INSERT INTO user(name, email, pass_word, cpf, telephone, created_at) 
