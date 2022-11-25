@@ -4,11 +4,11 @@
 </head>
 <body class>
     <?php
-        include "utils/list_classrooms.php";
+        include "utils/list_institutes.php";
     ?>
     <script>
         $(document).ready(function(){
-            $("#classroomsTable").DataTable();
+            $("#institutesTable").DataTable();
         });
     </script>
     <br>
@@ -16,15 +16,13 @@
         <div class ="row">
             <div class = "col-3"></div>
             <div class = "col-6">
-                <table class="table table-hover table-striped" id="classroomsTable">
+                <table class="table table-hover table-striped" id="institutesTable">
                     <thead>
                         <tr>
-                            <th scope="col">Código</th>
-                            <th scope="col">Instituto</th>
-                            <th scope="col">Capacidade</th>
-                            <th scope="col">Alocar</th>
+                            <th scope="col">Sigla</th>
+                            <th scope="col">Nome</th>
                             <?php
-                            if (isManager($_SESSION['user_type']))
+                            if (isAdmin($_SESSION['user_type']))
                             {
                                 echo '<th scope="col">Alterar</th>';
                                 echo '<th scope="col">Apagar</th>';
@@ -34,7 +32,7 @@
                     </thead>
                     <tbody>
                         <?php 
-                            listClassroomTable($connection);
+                            listInstituteTable($connection);
                         ?>
                     </tbody>
                 </table>
@@ -45,10 +43,10 @@
                 <div class = "col-3"></div>
                 <div class = "col-3">
                     <?php
-                    if (isManager($_SESSION['user_type']))
+                    if (isAdmin($_SESSION['user_type']))
                     {
                         ?>
-                        <button class="btn btn-primary" onclick="location.href='index.php?page=add_classroom'">Adicionar Novas Salas</button>
+                        <button class="btn btn-primary" onclick="location.href='index.php?page=add_institute'">Adicionar Novo Instituto</button>
                         <?php
                     }
                     ?>

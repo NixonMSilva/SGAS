@@ -28,7 +28,7 @@
                 {
                   ?>
                   <li><a href="#" class="nav-link px-2 text-white">Listar Usuários</a></li>
-                  <li><a href="#" class="nav-link px-2 text-white">Adc. Institutos</a></li>
+                  <li><a href="?page=institutes" class="nav-link px-2 text-white">Listar Institutos</a></li>
                   <?php
                 }
               }

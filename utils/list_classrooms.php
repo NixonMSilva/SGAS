@@ -24,6 +24,7 @@ function listClassroomTable ($connection)
                     <td><a href='#'>Alocar</a></td>";
             if (isManager($_SESSION['user_type']))
             {
+                echo "<td><a href='#'>Alterar</a>";
                 echo "<td><a href='#'>Apagar</a>";
             }
             echo

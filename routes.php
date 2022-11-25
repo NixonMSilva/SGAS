@@ -36,6 +36,31 @@ function setRoute ($page)
                 pagePermissionDenied();
             break;
 
+        case 'institutes':
+
+            if (isAdmin($_SESSION['user_type']))
+                include 'views/institutes.php';
+            else
+                pagePermissionDenied();
+            break;
+
+        case 'add_institute':
+
+            if (isAdmin($_SESSION['user_type']))
+                include 'views/add_institute.php';
+            else
+                pagePermissionDenied();
+            break;
+
+        case 'remove_institute':
+
+            if (isAdmin($_SESSION['user_type']))
+                include 'remove_institute.php';
+            else
+                pagePermissionDenied();
+            break;
+
+
         case 'requests':
 
             if (isset($_SESSION['is_logged']))

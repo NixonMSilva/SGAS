@@ -1,6 +1,37 @@
 var hasErrorMessage = false;
 var hasPasswordErrorMessage = false;
 
+const submitEditForm = (formId, currentPage, repeatPass, itemId) => {
+    let form = document.getElementById(formId);
+
+    if (!validateForm(form, repeatPass))
+    {
+        if (!hasErrorMessage)
+        {
+            let errorMessage = document.getElementById("errorText");
+            let messageParagraph = document.createElement("p");
+            let messageText = document.createTextNode("Há um ou mais campos com erros! Corrija-os todos antes de submeter!");
+            messageParagraph.appendChild(messageText);
+            errorMessage.appendChild(messageParagraph);
+
+            hasErrorMessage = true;
+        }
+        
+        return;
+    }
+    
+    form.method = "post";
+    
+    switch (currentPage)
+    {
+        case 'institute':
+            form.action = "update_institute.php?id=" + itemId;
+            break;
+    }
+
+    form.submit();
+}
+
 const submitForm = (formId, currentPage, repeatPass) => {
 
     let form = document.getElementById(formId);
@@ -36,7 +67,10 @@ const submitForm = (formId, currentPage, repeatPass) => {
         case 'classroom':
             form.action = "register_classroom.php"; 
             break;
-        
+
+        case 'institute':
+            form.action = "register_institute.php";
+            break;
     }
 
     form.submit();
