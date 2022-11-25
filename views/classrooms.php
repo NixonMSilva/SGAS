@@ -34,7 +34,14 @@
                     </thead>
                     <tbody>
                         <?php 
-                            listClassroomTable($connection);
+                            if (isManager($_SESSION['user_type']))
+                            {
+                                listClassroomTable($connection, true);    
+                            }
+                            else
+                            {
+                                listClassroomTable($connection, false);
+                            }
                         ?>
                     </tbody>
                 </table>

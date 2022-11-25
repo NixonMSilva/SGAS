@@ -35,6 +35,14 @@ function setRoute ($page)
             else
                 pagePermissionDenied();
             break;
+        
+        case 'remove_classroom':
+
+            if (isAdmin($_SESSION['user_type']))
+                include 'remove_classroom.php';
+            else
+                pagePermissionDenied();
+            break;
 
         case 'institutes':
 
@@ -59,7 +67,6 @@ function setRoute ($page)
             else
                 pagePermissionDenied();
             break;
-
 
         case 'requests':
 

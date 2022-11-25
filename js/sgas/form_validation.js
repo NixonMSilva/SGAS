@@ -24,8 +24,14 @@ const submitEditForm = (formId, currentPage, repeatPass, itemId) => {
     
     switch (currentPage)
     {
+        case 'signup':
+            form.action = "update_user.php?id=" + itemId; 
+            break;
         case 'institute':
             form.action = "update_institute.php?id=" + itemId;
+            break;
+        case 'classroom':
+            form.action = "update_classroom.php?id=" + itemId; 
             break;
     }
 

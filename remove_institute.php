@@ -5,9 +5,19 @@ include 'utils/current_time.php';
 
 $instituteCode = mysqli_real_escape_string($connection, $_GET['id']);
 
-$instituteSoftDeleteQuery =
-"UPDATE institute SET isActive = 0 WHERE id = $instituteCode";
+$instituteCountQuery = "SELECT COUNT(*) FROM classroom WHERE institute_id = $instituteCode";
+$instituteCountQueryResult = mysqli_fetch_row(mysqli_query($connection, $instituteCountQuery));
 
-mysqli_query($connection, $instituteSoftDeleteQuery);
+if ($instituteCountQueryResult[0] > 0)
+{
+    include 'views/permission_denied_dependency.php';
+}
+else
+{
+    $instituteSoftDeleteQuery =
+    "UPDATE institute SET isActive = 0 WHERE id = $instituteCode";
 
-header('location:index.php?page=institutes');
+    mysqli_query($connection, $instituteSoftDeleteQuery);
+
+    header('location:index.php?page=institutes');
+}

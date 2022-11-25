@@ -27,7 +27,7 @@
                 if (isAdmin($_SESSION['user_type']))
                 {
                   ?>
-                  <li><a href="#" class="nav-link px-2 text-white">Listar Usuários</a></li>
+                  <li><a href="?page=users" class="nav-link px-2 text-white">Listar Usuários</a></li>
                   <li><a href="?page=institutes" class="nav-link px-2 text-white">Listar Institutos</a></li>
                   <?php
                 }
@@ -46,7 +46,10 @@
           <?php
             if (isset($_SESSION['is_logged']))
             {
-              ?><button type="button" class="btn btn-warning" onclick="location.href='logout_user.php'">Logout</button><?php
+              ?>
+              <button type="button" class="btn btn-warning" onclick="location.href='index.php?page=signup&id=<?php echo $_SESSION['user_id']; ?>'">Editar Perfil</button>
+              <button type="button" class="btn btn-warning" onclick="location.href='logout_user.php'">Logout</button>
+              <?php
             }
             else
             {

@@ -14,8 +14,8 @@ $currentTime = getCurrentTime();
 $userPassword = hash('sha256', $currentTime . $userPassword);
 
 $userInsertQuery =
-"INSERT INTO user(name, email, pass_word, cpf, telephone, created_at) 
-VALUES ('$userName','$userEmail','$userPassword','$userCPF','$userTelephone', '$currentTime')";
+"INSERT INTO user(name, email, pass_word, cpf, telephone, created_at, altered_at) 
+VALUES ('$userName','$userEmail','$userPassword','$userCPF','$userTelephone', '$currentTime', '$currentTime')";
 
 mysqli_query($connection, $userInsertQuery);
 
