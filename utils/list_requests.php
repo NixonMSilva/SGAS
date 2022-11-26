@@ -13,7 +13,7 @@ function listRequestTable ($connection, $isManager)
     {
         while ($row = mysqli_fetch_array($result))
         {
-            if ($row['request_status'] != 'R')
+            if ($row['request_status'] != 'R' || isManager($_SESSION['user_type']))
             {
                 printRow($row);
             }  
@@ -26,7 +26,7 @@ function listRequestByUserTable ($connection, $isManager, $userId)
     $result = listUserRequests($connection, $userId);
     while ($row = mysqli_fetch_array($result))
     {
-        if ($row['request_status'] != 'R')
+        if ($row['request_status'] != 'R' || isManager($_SESSION['user_type']))
         {
             printRow($row);
         }  
@@ -38,7 +38,7 @@ function listRequestByRoomTable ($connection, $isManager, $roomId)
     $result = listClassroomRequests($connection, $roomId);
     while ($row = mysqli_fetch_array($result))
     {
-        if ($row['request_status'] != 'R')
+        if ($row['request_status'] != 'R' || isManager($_SESSION['user_type']))
         {
             printRow($row);
         }  
@@ -89,6 +89,7 @@ function listClassroomRequests ($connection, $roomId)
 
 function printRow ($row)
 {
+    $requestId          = $row['request_id'];
     $classroomCode      = $row['classroom_id'];
     $requestorName      = $row['name'];
     $requestTimeStart   = $row['request_time_start'];
@@ -109,20 +110,20 @@ function printRow ($row)
     {
         if ($row['request_status'] == 'A')
         {
-            echo "<td><a href='./index.php?page=add_classroom&room_code=$classroomCode'>Marcar Pendente</a></td>";
+            echo "<td><a href='./index.php?page=reset_request&requestId=$requestId'>Marcar Pendente</a></td>";
         }
         else
         {
-            echo "<td><a href='./index.php?page=remove_classroom&room_code=$classroomCode'>Aprovar</a></td>";
+            echo "<td><a href='./index.php?page=approve_request&requestId=$requestId'>Aprovar</a></td>";
         }
 
         if ($row['request_status'] == 'R')
         {
-            echo "<td><a href='./index.php?page=remove_classroom&room_code=$classroomCode'>Desfazer Rejeição</a></td>";
+            echo "<td><a href='./index.php?page=reset_request&requestId=$requestId'>Desfazer Rejeição</a></td>";
         }
         else 
         {
-            echo "<td><a href='./index.php?page=remove_classroom&room_code=$classroomCode'>Rejeitar</a></td>";
+            echo "<td><a href='./index.php?page=reject_request&requestId=$requestId'>Rejeitar</a></td>";
         }
         
     }

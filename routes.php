@@ -70,7 +70,7 @@ function setRoute ($page)
 
         case 'requests':
 
-            if (isset($_SESSION['is_logged']))
+            if (isManager($_SESSION['user_type']))
                 include 'views/requests.php';
             else
                 pagePermissionDenied();
@@ -90,10 +90,7 @@ function setRoute ($page)
         case 'classroomRequests':
 
             if (isset($_SESSION['is_logged']))
-            {
-                //$_GET['userId'] = $_SESSION['user_id'];
                 include 'views/requests.php';
-            }
             else
                 pagePermissionDenied();
             break;
@@ -102,6 +99,39 @@ function setRoute ($page)
 
             if (isset($_SESSION['is_logged']))
                 include 'views/add_request.php';
+            else
+                pagePermissionDenied();
+            break;
+
+        case 'approve_request':
+
+            if (isManager($_SESSION['user_type']) && isset($_GET['requestId']))
+            {
+                $requestId = $_GET['requestId'];
+                header("location:approve_request.php?id=$requestId");
+            }
+            else
+                pagePermissionDenied();
+            break;
+        
+        case 'reject_request':
+
+            if (isManager($_SESSION['user_type']) && isset($_GET['requestId']))
+            {
+                $requestId = $_GET['requestId'];
+                header("location:reject_request.php?id=$requestId");
+            }
+            else
+                pagePermissionDenied();
+            break;
+
+        case 'reset_request':
+
+            if (isManager($_SESSION['user_type']) && isset($_GET['requestId']))
+            {
+                $requestId = $_GET['requestId'];
+                header("location:reset_request.php?id=$requestId");
+            }
             else
                 pagePermissionDenied();
             break;
