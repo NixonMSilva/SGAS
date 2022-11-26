@@ -45,10 +45,10 @@ function printRow ($row)
     $capacity = $row['capacity'];
     echo 
         "<tr>
-            <th scope='row'>$code</th>
+            <th scope='row'><a href='./index.php?page=classroomRequests&room_code=$code'>$code</th>
             <td>$acronym</td>
             <td>$capacity</td>
-            <td><a href='#'>Alocar</a></td>";
+            <td><a href='./index.php?page=add_request&room_code=$code'>Alocar</a></td>";
     if (isManager($_SESSION['user_type']))
     {
         echo "<td><a href='./index.php?page=add_classroom&room_code=$code'>Alterar</a>";

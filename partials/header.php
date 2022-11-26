@@ -17,12 +17,12 @@
             {
               ?>
               <li><a href="?page=classrooms" class="nav-link px-2 text-white">Listar Salas</a></li>
-              <li><a href="#" class="nav-link px-2 text-white">Suas Alocações</a></li>
+              <li><a href="?page=userRequests" class="nav-link px-2 text-white">Suas Alocações</a></li>
               <?php
               if (isManager($_SESSION['user_type']))
               {
                 ?>
-                <li><a href="#" class="nav-link px-2 text-white">Solicitações</a></li>
+                <li><a href="?page=requests" class="nav-link px-2 text-white">Ver Alocações</a></li>
                 <?php
                 if (isAdmin($_SESSION['user_type']))
                 {

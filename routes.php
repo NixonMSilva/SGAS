@@ -76,6 +76,36 @@ function setRoute ($page)
                 pagePermissionDenied();
             break;
 
+        case 'userRequests':
+
+            if (isset($_SESSION['is_logged']))
+            {
+                $_GET['userId'] = $_SESSION['user_id'];
+                include 'views/requests.php';
+            }
+            else
+                pagePermissionDenied();
+            break;
+
+        case 'classroomRequests':
+
+            if (isset($_SESSION['is_logged']))
+            {
+                //$_GET['userId'] = $_SESSION['user_id'];
+                include 'views/requests.php';
+            }
+            else
+                pagePermissionDenied();
+            break;
+
+        case 'add_request':
+
+            if (isset($_SESSION['is_logged']))
+                include 'views/add_request.php';
+            else
+                pagePermissionDenied();
+            break;
+
         default:
             pageHome();
             break;

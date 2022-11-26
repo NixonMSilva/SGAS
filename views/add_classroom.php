@@ -9,7 +9,7 @@
 
     if (isset($_GET['room_code']))
     {
-      $id = $_GET['room_code'];
+      $id = mysqli_real_escape_string($connection, $_GET['room_code']);
       $isEdit = true;
       $row = listSingleClassroom($connection, $id);
     }

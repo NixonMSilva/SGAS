@@ -16,7 +16,6 @@ const submitEditForm = (formId, currentPage, repeatPass, itemId) => {
 
             hasErrorMessage = true;
         }
-        
         return;
     }
     
@@ -32,6 +31,9 @@ const submitEditForm = (formId, currentPage, repeatPass, itemId) => {
             break;
         case 'classroom':
             form.action = "update_classroom.php?id=" + itemId; 
+            break;
+        case 'request':
+            form.action = "register_request.php?id=" + itemId;
             break;
     }
 
@@ -111,6 +113,15 @@ const validateForm = (form, repeatPass) => {
                 break;
         }
 
+        let elementId = formElements[i].id;
+
+        if (String(elementId).includes("Hour"))
+        {
+            status = validateHours(formElements[i].value + ":00", formElements[(i + 1)].value + ":00");
+            console.log(status);
+            i++;
+        }
+
         if (!status)
         {
             let errorString = "Error at: " + elementType;
@@ -127,6 +138,10 @@ const validateForm = (form, repeatPass) => {
 
 const validateEmpty = (value) => {
     return !(value === "");
+}
+
+const validateHours = (hourA, hourB) => {
+    return hourB > hourA;
 }
 
 const validateCpf = (cpfString) => {

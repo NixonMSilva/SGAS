@@ -8,7 +8,7 @@
 
     if (isset($_GET['id']))
     {
-      $id = $_GET['id'];
+      $id = mysqli_real_escape_string($connection, $_GET['id']);
       $isEdit = true;
       $row = listSingleInstitute($connection, $id);
     }
