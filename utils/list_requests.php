@@ -141,6 +141,8 @@ function translateRequestStatus ($requestStatus)
             return "Aprovada";
         case "R":
             return "Rejeitada";
+        case "E":
+            return "Expirada";
         default:
             return "NULL";
     }
@@ -156,6 +158,8 @@ function getRequestStatusColor ($requestStatus)
             return "#198754";
         case "R":
             return "#dc3545";
+        case "E":
+            return "#ff6619";
         default:
             return "#000000";
     }

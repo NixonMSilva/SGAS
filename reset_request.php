@@ -9,7 +9,7 @@ $currentTime = getCurrentTime();
 $resetRejectQuery =
 "UPDATE request 
         SET request_status = 'P'
-        WHERE request_id = $requestId";
+        WHERE (request_id = $requestId) AND (request_status <> 'E')";
 
 mysqli_query($connection, $resetRejectQuery);
 

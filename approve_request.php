@@ -51,7 +51,7 @@ else
     $requestApproveQuery =
     "UPDATE request 
         SET request_status = 'A', approved_at = '$currentTime'
-        WHERE request_id = $requestId";
+        WHERE request_id = $requestId AND (request_status <> 'E')";
 
     mysqli_query($connection, $requestApproveQuery);
 
