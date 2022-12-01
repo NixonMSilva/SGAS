@@ -1,6 +1,7 @@
 <?php
 
 include 'db.php';
+include 'convert_timestamp.php';
 
 function listRequestTable ($connection, $isManager)
 {
@@ -13,7 +14,7 @@ function listRequestTable ($connection, $isManager)
     {
         while ($row = mysqli_fetch_array($result))
         {
-            if ($row['request_status'] != 'R' || isManager())
+            if (($row['request_status'] != 'R' && $row['request_status'] != 'E') || isManager())
             {
                 printRow($row);
             }  
@@ -26,7 +27,7 @@ function listRequestByUserTable ($connection, $isManager, $userId)
     $result = listUserRequests($connection, $userId);
     while ($row = mysqli_fetch_array($result))
     {
-        if ($row['request_status'] != 'R' || isManager())
+        if (($row['request_status'] != 'R' && $row['request_status'] != 'E') || isManager())
         {
             printRow($row);
         }  
@@ -38,7 +39,7 @@ function listRequestByRoomTable ($connection, $isManager, $roomId)
     $result = listClassroomRequests($connection, $roomId);
     while ($row = mysqli_fetch_array($result))
     {
-        if ($row['request_status'] != 'R' || isManager())
+        if (($row['request_status'] != 'R' && $row['request_status'] != 'E') || isManager())
         {
             printRow($row);
         }  
@@ -92,40 +93,48 @@ function printRow ($row)
     $requestId          = $row['request_id'];
     $classroomCode      = $row['classroom_id'];
     $requestorName      = $row['name'];
-    $requestTimeStart   = $row['request_time_start'];
-    $requestTimeEnd     = $row['request_time_end'];
+    $requestDate        = convertTimestampDate($row['request_time_start']);
+    $requestTimeStart   = convertTimestampHour($row['request_time_start']);
+    $requestTimeEnd     = convertTimestampHour($row['request_time_end']);
     $requestStatus      = translateRequestStatus($row['request_status']);
-    $requestedAt        = $row['requested_at'];
+    $requestedAt        = convertTimestampFull($row['requested_at']);
     $requestStatusColor = getRequestStatusColor($row['request_status']);
     
     echo 
         "<tr>
             <th scope='row'>$classroomCode</th>
             <td>$requestorName</td>
+            <td>$requestDate</td>
             <td>$requestTimeStart</td>
             <td>$requestTimeEnd</td>
             <td style='color:$requestStatusColor;'>$requestStatus</td>
             <td>$requestedAt</td>";
     if (isManager())
     {
-        if ($row['request_status'] == 'A')
+        if ($row['request_status'] != 'E')
         {
-            echo "<td><a href='./index.php?page=reset_request&requestId=$requestId'>Marcar Pendente</a></td>";
+            if ($row['request_status'] == 'A')
+            {
+                echo "<td><a href='./index.php?page=reset_request&requestId=$requestId'>Marcar Pendente</a></td>";
+            }
+            else
+            {
+                echo "<td><a href='./index.php?page=approve_request&requestId=$requestId'>Aprovar</a></td>";
+            }
+
+            if ($row['request_status'] == 'R')
+            {
+                echo "<td><a href='./index.php?page=reset_request&requestId=$requestId'>Desfazer Rejeição</a></td>";
+            }
+            else 
+            {
+                echo "<td><a href='./index.php?page=reject_request&requestId=$requestId'>Rejeitar</a></td>";
+            }
         }
         else
         {
-            echo "<td><a href='./index.php?page=approve_request&requestId=$requestId'>Aprovar</a></td>";
+            echo "<td>-</td><td>-</td>";
         }
-
-        if ($row['request_status'] == 'R')
-        {
-            echo "<td><a href='./index.php?page=reset_request&requestId=$requestId'>Desfazer Rejeição</a></td>";
-        }
-        else 
-        {
-            echo "<td><a href='./index.php?page=reject_request&requestId=$requestId'>Rejeitar</a></td>";
-        }
-        
     }
     echo
         "</tr>";

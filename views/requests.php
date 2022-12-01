@@ -21,7 +21,11 @@
     <script>
         $(document).ready(function(){
             $("#requestsTable").DataTable({
-                order: [[2, 'desc']],
+                order: [[6, 'desc']],
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
+                },
+                stateSave: true,
             });
         });
     </script>
@@ -34,12 +38,13 @@
                         <tr>
                             <th scope="col">Código da Sala</th>
                             <th scope="col">Nome</th>
+                            <th scope="col">Data</th>
                             <th scope="col">Início</th>
                             <th scope="col">Término</th>
                             <th scope="col">Estado</th>
-                            <th scope="col">Horário de Solicitação</th>
+                            <th scope="col">Solicitado Em</th>
                             <?php
-                            if (isManager($_SESSION['user_type']))
+                            if (isManager())
                             {
                                 echo "<th></th>";
                                 echo "<th></th>";
@@ -51,15 +56,15 @@
                         <?php 
                             if ($isByUser)
                             {
-                                listRequestByUserTable($connection, isManager($_SESSION['user_type']), $userId);
+                                listRequestByUserTable($connection, isManager(), $userId);
                             }
                             else if ($isByRoom)
                             {
-                                listRequestByRoomTable($connection, isManager($_SESSION['user_type']), $roomCode);
+                                listRequestByRoomTable($connection, isManager(), $roomCode);
                             }
                             else
                             {
-                                listRequestTable($connection, isManager($_SESSION['user_type']));
+                                listRequestTable($connection, isManager());
                             }
                         ?>
                     </tbody>
