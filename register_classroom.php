@@ -10,8 +10,8 @@ $classroomInstituteId    =   mysqli_real_escape_string($connection, $_POST['clas
 $currentTime = getCurrentTime();
 
 $classroomInsertQuery =
-"INSERT INTO classroom(room_code, institute_id, available, created_at, capacity) 
-VALUES ('$classroomCode', '$classroomInstituteId', true, '$currentTime', '$classroomCapacity')";
+"INSERT INTO classroom(room_code, institute_id, available, created_at, capacity, isActive) 
+VALUES ('$classroomCode', '$classroomInstituteId', true, '$currentTime', '$classroomCapacity', true)";
 
 mysqli_query($connection, $classroomInsertQuery);
 

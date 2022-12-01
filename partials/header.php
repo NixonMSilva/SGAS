@@ -17,18 +17,18 @@
             {
               ?>
               <li><a href="?page=classrooms" class="nav-link px-2 text-white">Listar Salas</a></li>
-              <li><a href="#" class="nav-link px-2 text-white">Suas Alocações</a></li>
+              <li><a href="?page=userRequests" class="nav-link px-2 text-white">Suas Alocações</a></li>
               <?php
               if (isManager($_SESSION['user_type']))
               {
                 ?>
-                <li><a href="#" class="nav-link px-2 text-white">Solicitações</a></li>
+                <li><a href="?page=requests" class="nav-link px-2 text-white">Ver Alocações</a></li>
                 <?php
                 if (isAdmin($_SESSION['user_type']))
                 {
                   ?>
-                  <li><a href="#" class="nav-link px-2 text-white">Listar Usuários</a></li>
-                  <li><a href="#" class="nav-link px-2 text-white">Adc. Institutos</a></li>
+                  <li><a href="?page=users" class="nav-link px-2 text-white">Listar Usuários</a></li>
+                  <li><a href="?page=institutes" class="nav-link px-2 text-white">Listar Institutos</a></li>
                   <?php
                 }
               }
@@ -37,16 +37,21 @@
           <li><a href="#" class="nav-link px-2 text-white">Sobre</a></li>
         </ul>
 
+        <!--
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
           <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Pesquisar Salas..." aria-label="Search">
         </form>
+          -->
 
         <div class="text-end">
           
           <?php
             if (isset($_SESSION['is_logged']))
             {
-              ?><button type="button" class="btn btn-warning" onclick="location.href='logout_user.php'">Logout</button><?php
+              ?>
+              <button type="button" class="btn btn-warning" onclick="location.href='index.php?page=signup&id=<?php echo $_SESSION['user_id']; ?>'">Editar Perfil</button>
+              <button type="button" class="btn btn-warning" onclick="location.href='logout_user.php'">Logout</button>
+              <?php
             }
             else
             {

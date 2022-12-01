@@ -1,6 +1,47 @@
 var hasErrorMessage = false;
 var hasPasswordErrorMessage = false;
 
+const disallowedFormValueReplacement = [ 'password', 'passwordRepat', 'requestEnd', 'requestHourStart', 'requestHourEnd'];
+
+const submitEditForm = (formId, currentPage, repeatPass, itemId) => {
+    let form = document.getElementById(formId);
+
+    if (!validateForm(form, repeatPass))
+    {
+        if (!hasErrorMessage)
+        {
+            let errorMessage = document.getElementById("errorText");
+            let messageParagraph = document.createElement("p");
+            let messageText = document.createTextNode("Há um ou mais campos com erros! Corrija-os todos antes de submeter!");
+            messageParagraph.appendChild(messageText);
+            errorMessage.appendChild(messageParagraph);
+
+            hasErrorMessage = true;
+        }
+        return;
+    }
+    
+    form.method = "post";
+    
+    switch (currentPage)
+    {
+        case 'signup':
+            form.action = "update_user.php?id=" + itemId; 
+            break;
+        case 'institute':
+            form.action = "update_institute.php?id=" + itemId;
+            break;
+        case 'classroom':
+            form.action = "update_classroom.php?id=" + itemId; 
+            break;
+        case 'request':
+            form.action = "register_request.php?id=" + itemId;
+            break;
+    }
+
+    form.submit();
+}
+
 const submitForm = (formId, currentPage, repeatPass) => {
 
     let form = document.getElementById(formId);
@@ -36,7 +77,10 @@ const submitForm = (formId, currentPage, repeatPass) => {
         case 'classroom':
             form.action = "register_classroom.php"; 
             break;
-        
+
+        case 'institute':
+            form.action = "register_institute.php";
+            break;
     }
 
     form.submit();
@@ -57,6 +101,8 @@ const validateForm = (form, repeatPass) => {
         if (elementType === "submitButton")
             continue;
 
+        //console.log(elementType);
+
         switch (elementType)
         {
             case "cpf":
@@ -65,6 +111,13 @@ const validateForm = (form, repeatPass) => {
             case "password":
                 if (repeatPass)
                     status = validatePassword(formElements[i].value, formElements[(i + 1)].value);
+                break;
+            case "requestDate":
+                status = validateDate(formElements[i].value + " " + formElements[(i + 1)].value + ":00");
+                break;
+            case 'requestHourStart':
+                status = validateHours(formElements[i].value + ":00", formElements[(i + 1)].value + ":00")
+                i++;
                 break;
             default:
                 status = validateEmpty(formElements[i].value);
@@ -76,7 +129,7 @@ const validateForm = (form, repeatPass) => {
             let errorString = "Error at: " + elementType;
             console.log(errorString);
             isCorrect = false;
-            if (formElements[i].id != 'password' && formElements[i].id != 'passwordRepeat')
+            if (!disallowedFormValueReplacement.includes(elementType))
                 formElements[i].value = "Valor inválido!";
         }
 
@@ -87,6 +140,16 @@ const validateForm = (form, repeatPass) => {
 
 const validateEmpty = (value) => {
     return !(value === "");
+}
+
+const validateDate = (date) => {
+    var parsedDate = Date.parse(date);
+    console.log("Date: " + parsedDate + " | Now: " + Date.now());
+    return parsedDate > Date.now();
+}
+
+const validateHours = (hourA, hourB) => {
+    return hourB > hourA;
 }
 
 const validateCpf = (cpfString) => {

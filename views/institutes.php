@@ -4,12 +4,11 @@
 </head>
 <body class>
     <?php
-        include "utils/list_classrooms.php";
+        include "utils/list_institutes.php";
     ?>
     <script>
         $(document).ready(function(){
-            $("#classroomsTable").DataTable({
-                order: [[1, 'asc']],
+            $("#institutesTable").DataTable({
                 language: {
                     url: 'https://cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json',
                 },
@@ -22,15 +21,13 @@
         <div class ="row">
             <div class = "col-3"></div>
             <div class = "col-6">
-                <table class="table table-hover table-striped" id="classroomsTable">
+                <table class="table table-hover table-striped" id="institutesTable">
                     <thead>
                         <tr>
-                            <th scope="col">Código</th>
-                            <th scope="col">Instituto</th>
-                            <th scope="col">Capacidade</th>
-                            <th scope="col">Alocar</th>
+                            <th scope="col">Sigla</th>
+                            <th scope="col">Nome</th>
                             <?php
-                            if (isManager())
+                            if (isAdmin($_SESSION['user_type']))
                             {
                                 echo '<th scope="col">Alterar</th>';
                                 echo '<th scope="col">Apagar</th>';
@@ -40,9 +37,7 @@
                     </thead>
                     <tbody>
                         <?php 
-                            
-                            listClassroomTable($connection, isManager());    
-                            
+                            listInstituteTable($connection);
                         ?>
                     </tbody>
                 </table>
@@ -53,10 +48,10 @@
                 <div class = "col-3"></div>
                 <div class = "col-3">
                     <?php
-                    if (isManager())
+                    if (isAdmin($_SESSION['user_type']))
                     {
                         ?>
-                        <button class="btn btn-primary" onclick="location.href='index.php?page=add_classroom'">Adicionar Novas Salas</button>
+                        <button class="btn btn-primary" onclick="location.href='index.php?page=add_institute'">Adicionar Novo Instituto</button>
                         <?php
                     }
                     ?>
