@@ -1,6 +1,8 @@
 var hasErrorMessage = false;
 var hasPasswordErrorMessage = false;
 
+const disallowedFormValueReplacement = [ 'password', 'passwordRepat', 'requestEnd', 'requestHourStart', 'requestHourEnd'];
+
 const submitEditForm = (formId, currentPage, repeatPass, itemId) => {
     let form = document.getElementById(formId);
 
@@ -99,6 +101,8 @@ const validateForm = (form, repeatPass) => {
         if (elementType === "submitButton")
             continue;
 
+        //console.log(elementType);
+
         switch (elementType)
         {
             case "cpf":
@@ -108,18 +112,16 @@ const validateForm = (form, repeatPass) => {
                 if (repeatPass)
                     status = validatePassword(formElements[i].value, formElements[(i + 1)].value);
                 break;
+            case "requestDate":
+                status = validateDate(formElements[i].value + " " + formElements[(i + 1)].value + ":00");
+                break;
+            case 'requestHourStart':
+                status = validateHours(formElements[i].value + ":00", formElements[(i + 1)].value + ":00")
+                i++;
+                break;
             default:
                 status = validateEmpty(formElements[i].value);
                 break;
-        }
-
-        let elementId = formElements[i].id;
-
-        if (String(elementId).includes("Hour"))
-        {
-            status = validateHours(formElements[i].value + ":00", formElements[(i + 1)].value + ":00");
-            console.log(status);
-            i++;
         }
 
         if (!status)
@@ -127,7 +129,7 @@ const validateForm = (form, repeatPass) => {
             let errorString = "Error at: " + elementType;
             console.log(errorString);
             isCorrect = false;
-            if (formElements[i].id != 'password' && formElements[i].id != 'passwordRepeat')
+            if (!disallowedFormValueReplacement.includes(elementType))
                 formElements[i].value = "Valor inválido!";
         }
 
@@ -138,6 +140,12 @@ const validateForm = (form, repeatPass) => {
 
 const validateEmpty = (value) => {
     return !(value === "");
+}
+
+const validateDate = (date) => {
+    var parsedDate = Date.parse(date);
+    console.log("Date: " + parsedDate + " | Now: " + Date.now());
+    return parsedDate > Date.now();
 }
 
 const validateHours = (hourA, hourB) => {

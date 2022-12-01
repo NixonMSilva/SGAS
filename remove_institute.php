@@ -10,7 +10,8 @@ $instituteCountQueryResult = mysqli_fetch_row(mysqli_query($connection, $institu
 
 if ($instituteCountQueryResult[0] > 0)
 {
-    include 'views/permission_denied_dependency.php';
+    include 'views/error_page.php';
+    printErrorDependency('index.php?page=home');
 }
 else
 {

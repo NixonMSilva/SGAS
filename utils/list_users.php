@@ -22,7 +22,7 @@ function listUserTable ($connection)
                     <td>$cpf</td>
                     <td>$email</td>
                     <td>$telephone</td>";
-            if (isAdmin($_SESSION['user_type']))
+            if (isAdmin())
             {
                 echo "<td><a href='?page=requests&userId=$id'>Ver Alocações</a>";
             }

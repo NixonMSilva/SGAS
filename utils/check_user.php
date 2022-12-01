@@ -1,11 +1,24 @@
 <?php
 
-function isAdmin ($userType)
+function isLogged ()
 {
-    return ($userType == 'A');
+    return isset($_SESSION['is_logged']);
 }
 
-function isManager ($userType)
+function isAdmin ()
 {
-    return ($userType == 'A' || $userType == 'M');
+    if (isset($_SESSION['user_type']))
+    {
+        return ($_SESSION['user_type'] == 'A');
+    }
+    return false;
+}
+
+function isManager ()
+{
+    if (isset($_SESSION['user_type']))
+    {
+        return ($_SESSION['user_type'] == 'A' || $_SESSION['user_type'] == 'M');
+    }
+    return false;
 }

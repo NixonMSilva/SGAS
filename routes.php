@@ -14,7 +14,7 @@ function setRoute ($page)
 
         case 'users':
 
-            if (isAdmin($_SESSION['user_type']))
+            if (isAdmin())
                 include 'views/users.php';
             else
                 pagePermissionDenied();
@@ -22,7 +22,7 @@ function setRoute ($page)
 
         case 'add_classroom':
 
-            if (isManager($_SESSION['user_type']))
+            if (isManager())
                 include 'views/add_classroom.php';
             else
                 pagePermissionDenied();
@@ -30,7 +30,7 @@ function setRoute ($page)
 
         case 'classrooms':
 
-            if (isset($_SESSION['is_logged']))
+            if (isLogged())
                 include 'views/classrooms.php';
             else
                 pagePermissionDenied();
@@ -38,7 +38,7 @@ function setRoute ($page)
         
         case 'remove_classroom':
 
-            if (isAdmin($_SESSION['user_type']))
+            if (isAdmin())
                 include 'remove_classroom.php';
             else
                 pagePermissionDenied();
@@ -46,7 +46,7 @@ function setRoute ($page)
 
         case 'institutes':
 
-            if (isAdmin($_SESSION['user_type']))
+            if (isAdmin())
                 include 'views/institutes.php';
             else
                 pagePermissionDenied();
@@ -54,7 +54,7 @@ function setRoute ($page)
 
         case 'add_institute':
 
-            if (isAdmin($_SESSION['user_type']))
+            if (isAdmin())
                 include 'views/add_institute.php';
             else
                 pagePermissionDenied();
@@ -62,7 +62,7 @@ function setRoute ($page)
 
         case 'remove_institute':
 
-            if (isAdmin($_SESSION['user_type']))
+            if (isAdmin())
                 include 'remove_institute.php';
             else
                 pagePermissionDenied();
@@ -70,7 +70,7 @@ function setRoute ($page)
 
         case 'requests':
 
-            if (isManager($_SESSION['user_type']))
+            if (isManager())
                 include 'views/requests.php';
             else
                 pagePermissionDenied();
@@ -78,7 +78,7 @@ function setRoute ($page)
 
         case 'userRequests':
 
-            if (isset($_SESSION['is_logged']))
+            if (isLogged())
             {
                 $_GET['userId'] = $_SESSION['user_id'];
                 include 'views/requests.php';
@@ -89,7 +89,7 @@ function setRoute ($page)
 
         case 'classroomRequests':
 
-            if (isset($_SESSION['is_logged']))
+            if (isLogged())
                 include 'views/requests.php';
             else
                 pagePermissionDenied();
@@ -97,7 +97,7 @@ function setRoute ($page)
 
         case 'add_request':
 
-            if (isset($_SESSION['is_logged']))
+            if (isLogged())
                 include 'views/add_request.php';
             else
                 pagePermissionDenied();
@@ -105,7 +105,7 @@ function setRoute ($page)
 
         case 'approve_request':
 
-            if (isManager($_SESSION['user_type']) && isset($_GET['requestId']))
+            if (isManager() && isset($_GET['requestId']))
             {
                 $requestId = $_GET['requestId'];
                 header("location:approve_request.php?id=$requestId");
@@ -116,7 +116,7 @@ function setRoute ($page)
         
         case 'reject_request':
 
-            if (isManager($_SESSION['user_type']) && isset($_GET['requestId']))
+            if (isManager() && isset($_GET['requestId']))
             {
                 $requestId = $_GET['requestId'];
                 header("location:reject_request.php?id=$requestId");
@@ -127,7 +127,7 @@ function setRoute ($page)
 
         case 'reset_request':
 
-            if (isManager($_SESSION['user_type']) && isset($_GET['requestId']))
+            if (isManager() && isset($_GET['requestId']))
             {
                 $requestId = $_GET['requestId'];
                 header("location:reset_request.php?id=$requestId");
@@ -149,5 +149,6 @@ function pageHome ()
 
 function pagePermissionDenied()
 {
-    include 'views/permission_denied.php';
+    include 'views/error_page.php';
+    printErrorAccessDenied('index.php?page=home');
 }

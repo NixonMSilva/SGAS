@@ -8,7 +8,9 @@
     ?>
     <script>
         $(document).ready(function(){
-            $("#classroomsTable").DataTable();
+            $("#classroomsTable").DataTable({
+                order: [[1, 'asc']],
+            });
         });
     </script>
     <br>
@@ -24,7 +26,7 @@
                             <th scope="col">Capacidade</th>
                             <th scope="col">Alocar</th>
                             <?php
-                            if (isManager($_SESSION['user_type']))
+                            if (isManager())
                             {
                                 echo '<th scope="col">Alterar</th>';
                                 echo '<th scope="col">Apagar</th>';
@@ -34,14 +36,9 @@
                     </thead>
                     <tbody>
                         <?php 
-                            if (isManager($_SESSION['user_type']))
-                            {
-                                listClassroomTable($connection, true);    
-                            }
-                            else
-                            {
-                                listClassroomTable($connection, false);
-                            }
+                            
+                            listClassroomTable($connection, isManager());    
+                            
                         ?>
                     </tbody>
                 </table>
@@ -52,7 +49,7 @@
                 <div class = "col-3"></div>
                 <div class = "col-3">
                     <?php
-                    if (isManager($_SESSION['user_type']))
+                    if (isManager())
                     {
                         ?>
                         <button class="btn btn-primary" onclick="location.href='index.php?page=add_classroom'">Adicionar Novas Salas</button>

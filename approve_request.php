@@ -18,6 +18,15 @@ $requestDataClassroomId = $requestDataQueryResult['classroom_id'];
 $requestDataTimeStart   = $requestDataQueryResult['request_time_start'];
 $requestDataTimeEnd     = $requestDataQueryResult['request_time_end'];
 
+// Verify if the resquest start time hasn't been expired already
+if ($currentTime > $requestDataTimeStart)
+{
+    include 'views/error_page.php';
+    printErrorRequestExpired();
+    exit();
+}
+
+// Verify if the request isn't in conflict with another
 $checkConflictQuery = 
 "SELECT COUNT(*)
     FROM request
@@ -33,7 +42,9 @@ $checkConflictQueryResult = mysqli_fetch_row(mysqli_query($connection, $checkCon
 
 if ($checkConflictQueryResult[0] > 0)
 {
-    include 'views/permission_denied_request_conflict.php';
+    include 'views/error_page.php';
+    printErrorRequestConflict();
+    exit();
 }
 else
 {

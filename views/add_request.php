@@ -91,17 +91,11 @@
                 <div class="col-sm-4">
                   <label for="requestHourStart" class="form-label">Horário de Início</label>
                   <input type="text" class="form-control" id="requestHourStart" name="requestHourStart" required>
-                  <div class="invalid-feedback">
-                    Horário maior que início
-                  </div>
                 </div>
 
                 <div class="col-sm-4">
                   <label for="requestHourEnd" class="form-label">Horário de Término</label>
                   <input type="text" class="form-control" id="requestHourEnd" name="requestHourEnd" required>
-                  <div class="invalid-feedback">
-                      Horário menor que início
-                  </div>
                 </div>
 
               <hr class="my-4">

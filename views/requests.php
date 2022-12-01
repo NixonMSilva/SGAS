@@ -20,7 +20,9 @@
     ?>
     <script>
         $(document).ready(function(){
-            $("#requestsTable").DataTable();
+            $("#requestsTable").DataTable({
+                order: [[2, 'desc']],
+            });
         });
     </script>
     <br>
@@ -63,7 +65,18 @@
                     </tbody>
                 </table>
             </div>
-            <div class = "col-3"></div>
+        </div>
+        <div class = "col-lg-3">
+            
+            <?php 
+            if ($isByRoom)
+            { ?>
+
+                <button class="w-100 btn btn-primary btn-lg" type="button" id="submitButton" onclick="location.href='index.php?page=add_request&room_code=<?php echo $roomCode ?>'">Requisitar Sala</button>
+
+                <?php
+            } ?>
+                
         </div>
     </div>
 </body>

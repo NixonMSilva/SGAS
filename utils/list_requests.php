@@ -13,7 +13,7 @@ function listRequestTable ($connection, $isManager)
     {
         while ($row = mysqli_fetch_array($result))
         {
-            if ($row['request_status'] != 'R' || isManager($_SESSION['user_type']))
+            if ($row['request_status'] != 'R' || isManager())
             {
                 printRow($row);
             }  
@@ -26,7 +26,7 @@ function listRequestByUserTable ($connection, $isManager, $userId)
     $result = listUserRequests($connection, $userId);
     while ($row = mysqli_fetch_array($result))
     {
-        if ($row['request_status'] != 'R' || isManager($_SESSION['user_type']))
+        if ($row['request_status'] != 'R' || isManager())
         {
             printRow($row);
         }  
@@ -38,7 +38,7 @@ function listRequestByRoomTable ($connection, $isManager, $roomId)
     $result = listClassroomRequests($connection, $roomId);
     while ($row = mysqli_fetch_array($result))
     {
-        if ($row['request_status'] != 'R' || isManager($_SESSION['user_type']))
+        if ($row['request_status'] != 'R' || isManager())
         {
             printRow($row);
         }  
@@ -106,7 +106,7 @@ function printRow ($row)
             <td>$requestTimeEnd</td>
             <td style='color:$requestStatusColor;'>$requestStatus</td>
             <td>$requestedAt</td>";
-    if (isManager($_SESSION['user_type']))
+    if (isManager())
     {
         if ($row['request_status'] == 'A')
         {
