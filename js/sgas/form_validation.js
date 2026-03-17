@@ -1,7 +1,7 @@
 var hasErrorMessage = false;
 var hasPasswordErrorMessage = false;
 
-const disallowedFormValueReplacement = [ 'password', 'passwordRepat', 'requestEnd', 'requestHourStart', 'requestHourEnd'];
+const disallowedFormValueReplacement = [ 'password', 'passwordRepat', 'requestEnd', 'requestHourStart', 'requestHourEnd' ];
 
 const submitEditForm = (formId, currentPage, repeatPass, itemId) => {
     let form = document.getElementById(formId);
